@@ -53,28 +53,18 @@ class ProjeAsistani:
         # RİSK ANALİZİ
         * Olası Riskler:
         * Risk Yönetimi:
-
-        Lütfen yanıtınızı doğrudan metin formatında, başlıkları ve madde işaretlerini koruyarak verin.
         """
 
         try:
             response = self.client.messages.create(
                 model="claude-3-sonnet-20240229",
-                max_tokens=4000,
-                temperature=0.7,
                 messages=[{
                     "role": "user", 
                     "content": prompt
-                }]
+                }],
+                max_tokens=4000
             )
-            
-            # API yanıtını düzenle
-            content = str(response.content)
-            # TextBlock formatını temizle
-            if "TextBlock" in content:
-                content = content.split("text='")[-1].split("')")[0]
-            return content
-            
+            return str(response.content)
         except Exception as e:
             return f"Bir hata oluştu: {str(e)}"
 

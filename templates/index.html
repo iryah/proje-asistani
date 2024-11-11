@@ -3,57 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proje Asistanı</title>
+    <title>Online Proje Asistanı</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-8 text-center">Online Proje Asistanı</h1>
-        
-        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-            <form id="projeForm" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Proje Konusu</label>
-                    <input type="text" id="konu" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2" required>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Navbar -->
+        <nav class="bg-blue-600 text-white p-4">
+            <div class="container mx-auto">
+                <h1 class="text-2xl font-bold">Online Proje Asistanı</h1>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-8">
+            <div class="max-w-4xl mx-auto">
+                <!-- Proje Formu -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <form id="projeForm" class="space-y-6">
+                        <!-- Proje Konusu -->
+                        <div>
+                            <label for="konu" class="block text-sm font-medium text-gray-700 mb-1">
+                                Proje Konusu
+                            </label>
+                            <input 
+                                type="text" 
+                                id="konu" 
+                                class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                required
+                            >
+                        </div>
+
+                        <!-- Proje Türü -->
+                        <div>
+                            <label for="tur" class="block text-sm font-medium text-gray-700 mb-1">
+                                Proje Türü
+                            </label>
+                            <select 
+                                id="tur" 
+                                class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            >
+                                <option value="Eğitim Projesi">Eğitim Projesi</option>
+                                <option value="Sosyal Sorumluluk Projesi">Sosyal Sorumluluk Projesi</option>
+                                <option value="Teknoloji Projesi">Teknoloji Projesi</option>
+                                <option value="Araştırma Projesi">Araştırma Projesi</option>
+                                <option value="Kültür-Sanat Projesi">Kültür-Sanat Projesi</option>
+                            </select>
+                        </div>
+
+                        <!-- Bütçe Aralığı -->
+                        <div>
+                            <label for="butce" class="block text-sm font-medium text-gray-700 mb-1">
+                                Bütçe Aralığı
+                            </label>
+                            <select 
+                                id="butce" 
+                                class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            >
+                                <option value="0-50,000 TL">0-50,000 TL</option>
+                                <option value="50,000-200,000 TL">50,000-200,000 TL</option>
+                                <option value="200,000-500,000 TL">200,000-500,000 TL</option>
+                                <option value="500,000+ TL">500,000+ TL</option>
+                            </select>
+                        </div>
+
+                        <!-- Proje Süresi -->
+                        <div>
+                            <label for="sure" class="block text-sm font-medium text-gray-700 mb-1">
+                                Proje Süresi
+                            </label>
+                            <select 
+                                id="sure" 
+                                class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            >
+                                <option value="3 Ay">3 Ay</option>
+                                <option value="6 Ay">6 Ay</option>
+                                <option value="1 Yıl">1 Yıl</option>
+                                <option value="1+ Yıl">1+ Yıl</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button 
+                            type="submit" 
+                            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                        >
+                            Proje Oluştur
+                        </button>
+                    </form>
                 </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Proje Türü</label>
-                    <select id="tur" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2">
-                        <option value="egitim">Eğitim Projesi</option>
-                        <option value="teknoloji">Teknoloji Projesi</option>
-                        <option value="sosyal">Sosyal Sorumluluk Projesi</option>
-                        <option value="arastirma">Araştırma Projesi</option>
-                    </select>
+
+                <!-- Loading Indicator -->
+                <div id="loading" class="hidden">
+                    <div class="flex items-center justify-center p-4">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                    </div>
+                    <p class="text-center text-gray-600">Proje oluşturuluyor, lütfen bekleyin...</p>
                 </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Bütçe Aralığı</label>
-                    <select id="butce" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2">
-                        <option value="0-50000">0-50,000 TL</option>
-                        <option value="50000-200000">50,000-200,000 TL</option>
-                        <option value="200000+">200,000+ TL</option>
-                    </select>
+
+                <!-- Proje Sonucu -->
+                <div id="sonuc" class="hidden bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">Proje Önerisi</h2>
+                    <div id="projeIcerik" class="prose max-w-none">
+                        <!-- Proje içeriği buraya gelecek -->
+                    </div>
                 </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Proje Süresi</label>
-                    <select id="sure" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2">
-                        <option value="3ay">3 Ay</option>
-                        <option value="6ay">6 Ay</option>
-                        <option value="1yil">1 Yıl</option>
-                        <option value="1yil+">1+ Yıl</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-                    Proje Oluştur
-                </button>
-            </form>
-            
-            <div id="sonuc" class="mt-8 hidden">
-                <h2 class="text-xl font-bold mb-4">Proje Önerisi</h2>
-<div id="projeIcerik" class="prose max-w-none bg-gray-50 p-4 rounded-md whitespace-pre-wrap leading-relaxed"></div>
             </div>
         </div>
     </div>
@@ -62,8 +116,13 @@
         document.getElementById('projeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Form ve sonuç elementleri
+            const loading = document.getElementById('loading');
             const sonuc = document.getElementById('sonuc');
             const projeIcerik = document.getElementById('projeIcerik');
+            
+            // Loading göster, sonucu gizle
+            loading.classList.remove('hidden');
             sonuc.classList.add('hidden');
             
             try {
@@ -81,12 +140,41 @@
                 });
                 
                 const data = await response.json();
+                
                 if (data.success) {
-                    projeIcerik.textContent = data.proje;
+                    // Metni satırlara böl ve formatla
+                    const formattedContent = data.proje.split('\n').map(line => {
+                        // Başlıkları kontrol et
+                        if (line.includes('------------')) {
+                            return ''; // Ayraç çizgilerini kaldır
+                        }
+                        if (line.toUpperCase() === line && line.trim().length > 0) {
+                            return `<h3 class="font-bold text-lg mt-4 mb-2 text-blue-600">${line}</h3>`;
+                        }
+                        if (line.startsWith('- ')) {
+                            return `<li class="ml-4">${line.substring(2)}</li>`;
+                        }
+                        if (line.trim().endsWith(':')) {
+                            return `<h4 class="font-semibold mt-2">${line}</h4>`;
+                        }
+                        return `<p class="mb-2">${line}</p>`;
+                    }).join('');
+                    
+                    projeIcerik.innerHTML = formattedContent;
+                    
+                    // Loading gizle, sonucu göster
+                    loading.classList.add('hidden');
                     sonuc.classList.remove('hidden');
+                    
+                    // Sonuca scroll
+                    sonuc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    alert('Proje oluşturulurken bir hata oluştu: ' + data.error);
                 }
             } catch (error) {
                 alert('Bir hata oluştu: ' + error);
+            } finally {
+                loading.classList.add('hidden');
             }
         });
     </script>

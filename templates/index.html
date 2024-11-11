@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proje Asistanı</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Online Proje Asistanı</h1>
+        
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <form id="projeForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Proje Konusu</label>
+                    <input type="text" id="konu" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2" required>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Proje Türü</label>
+                    <select id="tur" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2">
+                        <option value="egitim">Eğitim Projesi</option>
+                        <option value="teknoloji">Teknoloji Projesi</option>
+                        <option value="sosyal">Sosyal Sorumluluk Projesi</option>
+                        <option value="arastirma">Araştırma Projesi</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Bütçe Aralığı</label>
+                    <select id="butce" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2">
+                        <option value="0-50000">0-50,000 TL</option>
+                        <option value="50000-200000">50,000-200,000 TL</option>
+                        <option value="200000+">200,000+ TL</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Proje Süresi</label>
+                    <select id="sure" class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2">
+                        <option value="3ay">3 Ay</option>
+                        <option value="6ay">6 Ay</option>
+                        <option value="1yil">1 Yıl</option>
+                        <option value="1yil+">1+ Yıl</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                    Proje Oluştur
+                </button>
+            </form>
+            
+            <div id="sonuc" class="mt-8 hidden">
+                <h2 class="text-xl font-bold mb-4">Proje Önerisi</h2>
+<div id="projeIcerik" class="prose max-w-none bg-gray-50 p-4 rounded-md whitespace-pre-wrap leading-relaxed"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('projeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const sonuc = document.getElementById('sonuc');
+            const projeIcerik = document.getElementById('projeIcerik');
+            sonuc.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/olustur', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        konu: document.getElementById('konu').value,
+                        tur: document.getElementById('tur').value,
+                        butce: document.getElementById('butce').value,
+                        sure: document.getElementById('sure').value
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    projeIcerik.textContent = data.proje;
+                    sonuc.classList.remove('hidden');
+                }
+            } catch (error) {
+                alert('Bir hata oluştu: ' + error);
+            }
+        });
+    </script>
+</body>
+</html>
